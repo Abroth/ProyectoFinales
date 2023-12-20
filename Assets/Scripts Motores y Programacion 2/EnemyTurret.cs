@@ -12,6 +12,7 @@ public class EnemyTurret : EnemyBase
 
     public override void Start()
     {
+        _player = FindObjectOfType<Player>();
         Activate();
         BalanceLife();
     }

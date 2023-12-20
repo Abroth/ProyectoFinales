@@ -10,7 +10,7 @@ public class Enemy2 : EnemyBase
 
     public override void Start()
     {
-    
+        _player = FindObjectOfType<Player>();
         Activate();
         BalanceLife();
     }

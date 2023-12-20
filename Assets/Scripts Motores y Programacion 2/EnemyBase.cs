@@ -31,6 +31,7 @@ public class EnemyBase : MonoBehaviour, IHitable
 
     public virtual void Start()
     {
+        _player = FindObjectOfType<Player>();
         _myEnemyView= GetComponent<Enemy2View>();
         Activate();
         BalanceLife();

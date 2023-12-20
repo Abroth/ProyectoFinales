@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy2Movement : MonoBehaviour
 {
-    [SerializeField] Transform _target;
+    [SerializeField] Player _target;
     [SerializeField] float speed;
 
     [SerializeField] float distance;
@@ -23,6 +23,7 @@ public class Enemy2Movement : MonoBehaviour
 
     private void Start()
     {
+        _target = FindObjectOfType<Player>();
         _myEnemy = GetComponent<EnemyBase>();
         _myEnemyView = GetComponent<Enemy2View>();
         _myEnemy.OnAttackRange += AttakPlayer;
@@ -31,7 +32,7 @@ public class Enemy2Movement : MonoBehaviour
 
     private void Update()
     {
-        _groundTarget = new Vector3(_target.position.x, transform.position.y, _target.position.z);
+        _groundTarget = new Vector3(_target.transform.position.x, transform.position.y, _target.transform.position.z);
         playerOnSight = Physics.CheckSphere(transform.position, distance, _playerMask);
         if (playerOnSight) LookAtPlayer(_groundTarget);
     }
@@ -43,7 +44,7 @@ public class Enemy2Movement : MonoBehaviour
             return;
         }
         _myEnemyView.IsWalking(true);
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(_target.position.x, transform.position.y, _target.position.z), speed * Time.deltaTime); 
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(_target.transform.position.x, transform.position.y, _target.transform.position.z), speed * Time.deltaTime); 
     }
 
     public void LookAtPlayer(Vector3 lookAtThis)
