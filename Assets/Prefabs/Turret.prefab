@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
   speed: 0
-  distance: 14.43
+  distance: 0
   attackRange: 0
   _playerMask:
     serializedVersion: 2

@@ -15,6 +15,8 @@ public class Gun : MonoBehaviour
     //public ParticleSystem muscleFlash;
     public GameObject dustImpact;
 
+    AudioManager _audioManager;
+
     public float score;
 
     public event Action scorePoint = delegate { };
@@ -24,6 +26,7 @@ public class Gun : MonoBehaviour
 
     private void Start()
     {
+        _audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         _myPlayer = GetComponentInParent<Player>();
         _myPlayer.onDead += PlayerDead;
         _myPlayer.OnDamagePowerUp += PowerUpDamage;
@@ -34,7 +37,7 @@ public class Gun : MonoBehaviour
     public void Shoot()
     {
         //muscleFlash.Play();
-
+        _audioManager.PlaySFX(_audioManager.shoot);
         OnShoot();
 
         RaycastHit hit;

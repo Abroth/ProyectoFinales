@@ -24,9 +24,16 @@ public class EnemyBase : MonoBehaviour, IHitable
     public Action OnAttackRange = delegate { };
     public event Action OnReset = delegate { };
 
+
+
     public EnemyBase()
     {
         _beforeActivation= new Dictionary<Behaviour, bool>();
+    }
+
+    private void Awake()
+    {
+        EventManager.SuscribeEvent(EventManager.EventsType.Event_PlayerDead, PlayerIsDead);
     }
 
     public virtual void Start()
@@ -100,5 +107,22 @@ public class EnemyBase : MonoBehaviour, IHitable
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, _distanceToPlayer);
+    }
+
+    public void PlayerIsDead(object p)
+    {
+        foreach (Behaviour behaviour in GetComponentsInChildren<Behaviour>())
+        {
+            _beforeActivation[behaviour] = behaviour.enabled;
+
+            behaviour.enabled = false;
+
+            if (behaviour.GetComponent<Animator>())
+            {
+                var anim = behaviour.GetComponent<Animator>();
+
+                anim.enabled = true;
+            }
+        }
     }
 }

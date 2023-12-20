@@ -23,6 +23,7 @@ public class Player : MonoBehaviour, IHitable, ICollector
     public LayerMask groundMask;
 
     PlayerMovement _playerMovement;
+    AudioManager _audioManager;
 
 
     public event Action onDead = delegate { };
@@ -34,7 +35,8 @@ public class Player : MonoBehaviour, IHitable, ICollector
 
     private void Awake()
     {
-        _characterController= GetComponent<CharacterController>();
+        _audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        _characterController = GetComponent<CharacterController>();
 
         _playerMovement = new PlayerMovement(this);
     }
@@ -69,7 +71,7 @@ public class Player : MonoBehaviour, IHitable, ICollector
 
     public void Jump()
     {
-
+        _audioManager.PlaySFX(_audioManager.jump);
 
         if (isGrounded)
         {
@@ -89,7 +91,8 @@ public class Player : MonoBehaviour, IHitable, ICollector
 
     public void GiveLife(int giveLife)
     {
-        life += giveLife;
+        currentLife += giveLife;
+        Mathf.Clamp(currentLife, 0, 11);
     }
 
     public void TakeLife(int damage)
@@ -104,6 +107,7 @@ public class Player : MonoBehaviour, IHitable, ICollector
 
     public void Dead()
     {
+        _audioManager.PlaySFX(_audioManager.death);
         enabled= false;
         EventManager.TriggerEvent(EventManager.EventsType.Event_PlayerDead); 
         Debug.Log("playerDead");
@@ -112,7 +116,7 @@ public class Player : MonoBehaviour, IHitable, ICollector
 
     public void GiveSpeed(float givenSpeed)
     {
-        speed = +givenSpeed;
+        StartCoroutine(SpeedPoweUp(givenSpeed));
     }
 
     public void GiveDamage(int givenDamage)
@@ -120,4 +124,14 @@ public class Player : MonoBehaviour, IHitable, ICollector
         OnDamagePowerUp(givenDamage);
     }
 
+    IEnumerator SpeedPoweUp(float givenSpeed)
+    {
+        float previousSpeed = speed;
+
+        speed = givenSpeed;
+
+        yield return new WaitForSeconds(5f);
+
+        speed = previousSpeed;
+    }
 }

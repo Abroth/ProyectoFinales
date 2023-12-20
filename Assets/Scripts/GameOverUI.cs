@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class GameOverUI : MonoBehaviour
 {
-    
+    [SerializeField] GameObject _gameOverMenu;
 
     private void Awake()
     {
-        EventManager.SuscribeEvent(EventManager.EventsType.Event_PlayerDead, TurnOnGameObject);
+        _gameOverMenu.SetActive(false);
+        EventManager.SuscribeEvent(EventManager.EventsType.Event_PlayerDead, TurnOnCanvas);
     }
 
     void TurnOnGameObject(object[] p)
@@ -24,10 +25,14 @@ public class GameOverUI : MonoBehaviour
         //    isDead = false;
         //}
 
-        Debug.Log("Creado");
         var screenGameOver = Instantiate(Resources.Load<ScreenGameOver>("GameOver Canvas"));
         SceneManagment.Instance.Push(screenGameOver);
         EventManager.UnsusribeEvent(EventManager.EventsType.Event_PlayerDead, TurnOnGameObject);
+    }
+
+    void TurnOnCanvas(object[] p)
+    {
+        _gameOverMenu.SetActive(true);
     }
 
 

@@ -17,6 +17,6 @@ public class ParticleSystemColor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _myParticle.startColor = _myMaterial.color;
+        //_myParticle.startColor = _myMaterial.color;
     }
 }
