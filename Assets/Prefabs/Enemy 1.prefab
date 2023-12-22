@@ -1000,13 +1000,13 @@ MonoBehaviour:
   _player: {fileID: 0}
   _distanceToPlayer: 6
   _myEnemyView: {fileID: 5034056926718071438}
-  _maxLife: 2
+  _maxLife: 4
   _timer: 2
   _currentTimer: 0
   _myAnimator: {fileID: 0}
   canAttack: 0
   _enemyMovement: {fileID: 4940074906219663062}
-  damage: 1
+  damage: 3
 --- !u!114 &4940074906219663062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,7 +1021,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
   speed: 2
-  distance: 7.03
+  distance: 25
   attackRange: 3
   _playerMask:
     serializedVersion: 2
